@@ -4,7 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import java.util.HashMap;
 
@@ -39,16 +44,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.refresh:
+        MenuItem item = menu.findItem(R.id.refresh);
+        item.getActionView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView imageView = (ImageView) v;
+                RotateAnimation animation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                animation.setDuration(400);
+                imageView.startAnimation(animation);
                 start();
-        }
-        return super.onOptionsItemSelected(item);
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void start() {
