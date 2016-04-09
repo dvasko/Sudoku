@@ -16,6 +16,7 @@ public class Sudoku {
     private Map<Point, TextView> mMap;
     private Callback mCallback;
     private Set<Character> mValidChars;
+    private Point mActivePoint;
 
     private Sudoku(Context context, ViewGroup container, Callback callback) {
         mCallback = callback;
@@ -120,6 +121,7 @@ public class Sudoku {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mActivePoint = point;
                 if (mCallback != null) {
                     mCallback.onClick(point);
                 }
@@ -128,11 +130,14 @@ public class Sudoku {
         mMap.put(point, text);
     }
 
-    public void draw(int x, int y, char number) {
+    public void drawOnActivePoint(char number) {
         if (!mValidChars.contains(number)) {
             throw new IllegalArgumentException("Allowed chars: '1', '2', '3', '4', '5', '6', '7', '8', '9' and ' '");
         }
-        mMap.get(new Point(x, y)).setText(String.valueOf(number));
+        if (mActivePoint != null) {
+            mMap.get(mActivePoint).setText(String.valueOf(number));
+        }
+        mActivePoint = null;
     }
 
 
