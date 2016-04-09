@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.vasko.sudoku.Sudoku.Callback;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
                 .layout(sudokuLayout)
                 .click(callback)
                 .build();
-
 
 
     }

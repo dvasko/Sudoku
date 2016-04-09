@@ -5,23 +5,38 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Sudoku {
     private Map<Point, TextView> mMap;
     private Callback mCallback;
+    private Set<Character> mValidChars;
 
     private Sudoku(LinearLayout mSudokuLayout, Callback callback) {
-        this.mMap = new HashMap<>();
         this.mCallback = callback;
+        this.mMap = new HashMap<>();
+        this.mValidChars = initValidChars();
 
         for (int y = 0; y < 3; ++y) {
             initRow(mSudokuLayout, y);
         }
     }
 
-    public Map<Point, TextView> getMap() {
-        return mMap;
+    private Set<Character> initValidChars() {
+        Set<Character> set = new HashSet<>();
+        set.add(' ');
+        set.add('1');
+        set.add('2');
+        set.add('3');
+        set.add('4');
+        set.add('5');
+        set.add('6');
+        set.add('7');
+        set.add('8');
+        set.add('9');
+        return set;
     }
 
     private void initRow(LinearLayout sudoku, int y) {
@@ -107,12 +122,17 @@ public class Sudoku {
         mMap.put(point, text);
     }
 
+    public void draw(int x, int y, char number) {
+        if (!mValidChars.contains(number)) {
+            throw new IllegalArgumentException("Allowed chars: '1', '2', '3', '4', '5', '6', '7', '8', '9' and ' '");
+        }
+        mMap.get(new Point(x, y)).setText(String.valueOf(number));
+    }
+
+
     public static class Builder {
         private LinearLayout sudokuLayout;
         private Callback callback;
-
-        public Builder() {
-        }
 
         public Builder layout(LinearLayout sudokuLayout) {
             this.sudokuLayout = sudokuLayout;
@@ -127,10 +147,6 @@ public class Sudoku {
         public Sudoku build() {
             return new Sudoku(sudokuLayout, callback);
         }
-    }
-
-    public interface Callback {
-        void onClick(Point point);
     }
 
 }
