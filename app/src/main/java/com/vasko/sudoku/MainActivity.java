@@ -2,8 +2,8 @@ package com.vasko.sudoku;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import java.util.HashMap;
@@ -34,14 +34,21 @@ public class MainActivity extends AppCompatActivity {
 
         start();
 
-        Button button = (Button) findViewById(R.id.restart);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start();
-            }
-        });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                start();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void start() {
