@@ -4,11 +4,7 @@ import java.util.Map;
 
 public class SudokuSolver {
 
-    // dimension of input
-    static int N = 9;
-
-    // sample input
-    static int grid[][] = {
+    private static final int[][] grid = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -20,7 +16,7 @@ public class SudokuSolver {
             {0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
-    static boolean isValid(Cell cell, int value) {
+    private static boolean isValid(Cell cell, int value) {
 
         if (grid[cell.row][cell.col] != 0) {
             throw new RuntimeException(
@@ -58,7 +54,7 @@ public class SudokuSolver {
 
     // simple function to get the next cell
     // read for yourself, very simple and straight forward
-    static Cell getNextCell(Cell cell) {
+    private static Cell getNextCell(Cell cell) {
 
         int row = cell.row;
         int col = cell.col;
@@ -83,8 +79,8 @@ public class SudokuSolver {
 
     // everything is put together here
     // very simple solution
-    // must return true, if the soduku is solved, return false otherwise
-    static boolean solve(Cell cell) {
+    // must return true, if the sudoku is solved, return false otherwise
+    private static boolean solve(Cell cell) {
 
         // if the cell is null, we have reached the end
         if (cell == null)
@@ -94,7 +90,7 @@ public class SudokuSolver {
         // continue on to next cell
         if (grid[cell.row][cell.col] != 0) {
             // return whatever is being returned by solve(next)
-            // i.e the state of soduku's solution is not being determined by
+            // i.e the state of sudoku's solution is not being determined by
             // this cell, but by other cells
             return solve(getNextCell(cell));
         }
@@ -157,7 +153,8 @@ public class SudokuSolver {
 
     static class Cell {
 
-        int row, col;
+        final int row;
+        final int col;
 
         public Cell(int row, int col) {
             super();
