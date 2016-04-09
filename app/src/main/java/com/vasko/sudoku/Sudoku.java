@@ -10,13 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Sudoku {
-    private Map<Point, TextBox> mMap;
-    private Context mContext;
-    private Callback mCallback;
+    private final Map<Point, TextBox> mMap;
+    private final Callback mCallback;
     private Point mActivePoint;
 
     private Sudoku(Context context, ViewGroup container, Callback callback) {
-        mContext = context;
         mCallback = callback;
         mMap = new HashMap<>();
 

@@ -8,8 +8,8 @@ import android.widget.Button;
 
 public class Keyboard {
 
-    private Sudoku mSudoku;
-    private KeyCallback mCallback;
+    private final Sudoku mSudoku;
+    private final KeyCallback mCallback;
 
     private Keyboard(Context context, final Sudoku sudoku, ViewGroup container, KeyCallback callback) {
         this.mSudoku = sudoku;

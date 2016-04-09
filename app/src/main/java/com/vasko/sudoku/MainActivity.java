@@ -11,7 +11,6 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private Sudoku sudoku;
-    private Keyboard keyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         FrameLayout keyboardContainer = (FrameLayout) findViewById(R.id.keyboard_container);
-        keyboard = new Keyboard.Builder()
+        new Keyboard.Builder()
                 .context(this)
                 .layout(keyboardContainer)
                 .sudoku(sudoku)
