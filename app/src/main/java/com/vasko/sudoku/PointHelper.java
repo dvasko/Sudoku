@@ -1,5 +1,8 @@
 package com.vasko.sudoku;
 
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -79,6 +82,11 @@ public class PointHelper {
             }
         }
         return false;
+    }
+
+    public static float convertDpToPixel(float dp) {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
 }

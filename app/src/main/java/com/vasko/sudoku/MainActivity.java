@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -22,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FrameLayout sudokuContainer = (FrameLayout) findViewById(R.id.sudoku_container);
+        ViewGroup sudokuContainer = (ViewGroup) findViewById(R.id.sudoku_container);
         sudoku = new Sudoku.Builder()
                 .context(this)
                 .layout(sudokuContainer)
                 .click(null)
                 .build();
 
-        FrameLayout keyboardContainer = (FrameLayout) findViewById(R.id.keyboard_container);
+        ViewGroup keyboardContainer = (ViewGroup) findViewById(R.id.keyboard_container);
         new Keyboard.Builder()
                 .context(this)
                 .layout(keyboardContainer)

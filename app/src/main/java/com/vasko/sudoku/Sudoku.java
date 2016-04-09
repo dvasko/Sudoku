@@ -1,6 +1,7 @@
 package com.vasko.sudoku;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,10 @@ public class Sudoku {
         mMap = new HashMap<>();
 
         LayoutInflater.from(context).inflate(R.layout.sudoku_layout, container, true);
+        ViewGroup sudokuLayout = (ViewGroup) container.findViewById(R.id.sudoku_layout);
+        ViewCompat.setElevation(sudokuLayout, PointHelper.convertDpToPixel(8));
         for (int y = 0; y < 3; ++y) {
-            initRow(container, y);
+            initRow(sudokuLayout, y);
         }
     }
 
