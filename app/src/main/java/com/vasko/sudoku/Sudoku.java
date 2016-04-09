@@ -1,6 +1,9 @@
 package com.vasko.sudoku;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,13 +17,14 @@ public class Sudoku {
     private Callback mCallback;
     private Set<Character> mValidChars;
 
-    private Sudoku(LinearLayout mSudokuLayout, Callback callback) {
-        this.mCallback = callback;
-        this.mMap = new HashMap<>();
-        this.mValidChars = initValidChars();
+    private Sudoku(Context context, ViewGroup container, Callback callback) {
+        mCallback = callback;
+        mMap = new HashMap<>();
+        mValidChars = initValidChars();
 
+        LayoutInflater.from(context).inflate(R.layout.sudoku_layout, container, true);
         for (int y = 0; y < 3; ++y) {
-            initRow(mSudokuLayout, y);
+            initRow(container, y);
         }
     }
 
@@ -39,7 +43,7 @@ public class Sudoku {
         return set;
     }
 
-    private void initRow(LinearLayout sudoku, int y) {
+    private void initRow(ViewGroup sudoku, int y) {
         LinearLayout row = null;
         switch (y) {
             case 0:
@@ -116,7 +120,9 @@ public class Sudoku {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onClick(point);
+                if (mCallback != null) {
+                    mCallback.onClick(point);
+                }
             }
         });
         mMap.put(point, text);
@@ -131,11 +137,17 @@ public class Sudoku {
 
 
     public static class Builder {
-        private LinearLayout sudokuLayout;
+        private Context context;
+        private ViewGroup container;
         private Callback callback;
 
-        public Builder layout(LinearLayout sudokuLayout) {
-            this.sudokuLayout = sudokuLayout;
+        public Builder context(Context context) {
+            this.context = context;
+            return this;
+        }
+
+        public Builder layout(ViewGroup container) {
+            this.container = container;
             return this;
         }
 
@@ -145,7 +157,12 @@ public class Sudoku {
         }
 
         public Sudoku build() {
-            return new Sudoku(sudokuLayout, callback);
+            if (context == null) {
+                throw new IllegalArgumentException("context must be != null");
+            } else if (container == null) {
+                throw new IllegalArgumentException("container must be != null");
+            }
+            return new Sudoku(context, container, callback);
         }
     }
 

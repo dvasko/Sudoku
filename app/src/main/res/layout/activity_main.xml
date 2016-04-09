@@ -9,13 +9,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.vasko.sudoku.MainActivity">
 
-    <include
-        android:id="@+id/sudoku"
-        layout="@layout/sudoku_layout"
+    <FrameLayout
+        android:id="@+id/sudoku_container"
         android:layout_width="380dp"
         android:layout_height="380dp"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">  </LinearLayout>
 
 
 </LinearLayout>
