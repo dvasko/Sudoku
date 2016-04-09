@@ -9,42 +9,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Sudoku {
     private Map<Point, TextView> mMap;
     private Context mContext;
     private Callback mCallback;
-    private Set<Character> mValidChars;
     private Point mActivePoint;
 
     private Sudoku(Context context, ViewGroup container, Callback callback) {
         mContext = context;
         mCallback = callback;
         mMap = new HashMap<>();
-        mValidChars = initValidChars();
 
         LayoutInflater.from(context).inflate(R.layout.sudoku_layout, container, true);
         for (int y = 0; y < 3; ++y) {
             initRow(container, y);
         }
-    }
-
-    private Set<Character> initValidChars() {
-        Set<Character> set = new HashSet<>();
-        set.add(' ');
-        set.add('1');
-        set.add('2');
-        set.add('3');
-        set.add('4');
-        set.add('5');
-        set.add('6');
-        set.add('7');
-        set.add('8');
-        set.add('9');
-        return set;
     }
 
     private void initRow(ViewGroup sudoku, int y) {
@@ -126,7 +107,7 @@ public class Sudoku {
             public void onClick(View v) {
                 cleanAllBoxes();
                 mActivePoint = point;
-                v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+                v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
                 if (mCallback != null) {
                     mCallback.onClick(point);
                 }
@@ -143,11 +124,20 @@ public class Sudoku {
     }
 
     public void drawOnActivePoint(char number) {
-        if (!mValidChars.contains(number)) {
+        if (!PointHelper.getAllowedChars().contains(number)) {
             throw new IllegalArgumentException("Allowed chars: '1', '2', '3', '4', '5', '6', '7', '8', '9' and ' '");
         }
         if (mActivePoint != null) {
-            mMap.get(mActivePoint).setText(String.valueOf(number));
+            TextView box = mMap.get(mActivePoint);
+            box.setText(String.valueOf(number));
+            if (number != ' ') {
+                boolean foundError = PointHelper.checkNumber(mMap, mActivePoint, number);
+                if (foundError) {
+                    box.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+                } else {
+                    box.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+                }
+            }
         }
         cleanAllBoxes();
     }

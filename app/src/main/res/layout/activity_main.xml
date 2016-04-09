@@ -21,6 +21,6 @@
         android:id="@+id/keyboard_container"
         android:layout_marginTop="20dp"
         android:layout_width="380dp"
-        android:layout_height="100dp"/>
+        android:layout_height="140dp"/>
 
 </LinearLayout>
