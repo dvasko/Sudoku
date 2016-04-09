@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/one"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -20,7 +20,7 @@
             android:layout_weight="1"
             style="@style/TextBox"/>
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/two"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             style="@style/TextBox"/>
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/three"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/four"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -52,7 +52,7 @@
             android:layout_weight="1"
             style="@style/TextBox"/>
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/five"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -60,7 +60,7 @@
             android:layout_weight="1"
             style="@style/TextBox"/>
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/six"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -76,7 +76,7 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/seven"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -84,7 +84,7 @@
             android:layout_weight="1"
             style="@style/TextBox"/>
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/eight"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -92,7 +92,7 @@
             android:layout_weight="1"
             style="@style/TextBox"/>
 
-        <TextView
+        <com.vasko.sudoku.TextBox
             android:id="@+id/nine"
             android:layout_width="0dp"
             android:layout_height="match_parent"

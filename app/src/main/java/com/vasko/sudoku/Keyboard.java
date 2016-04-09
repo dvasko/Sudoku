@@ -4,16 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 public class Keyboard {
 
-    private Context mContext;
     private Sudoku mSudoku;
     private KeyCallback mCallback;
 
     private Keyboard(Context context, final Sudoku sudoku, ViewGroup container, KeyCallback callback) {
-        this.mContext = context;
         this.mSudoku = sudoku;
         this.mCallback = callback;
 
@@ -24,43 +22,43 @@ public class Keyboard {
     }
 
     private void setupKey(ViewGroup container, int number) {
-        TextView button = null;
+        Button button = null;
         switch (number) {
             case 0:
-                button = (TextView) container.findViewById(R.id.empty);
+                button = (Button) container.findViewById(R.id.empty);
                 break;
             case 1:
-                button = (TextView) container.findViewById(R.id.one);
+                button = (Button) container.findViewById(R.id.one);
                 break;
             case 2:
-                button = (TextView) container.findViewById(R.id.two);
+                button = (Button) container.findViewById(R.id.two);
                 break;
             case 3:
-                button = (TextView) container.findViewById(R.id.three);
+                button = (Button) container.findViewById(R.id.three);
                 break;
             case 4:
-                button = (TextView) container.findViewById(R.id.four);
+                button = (Button) container.findViewById(R.id.four);
                 break;
             case 5:
-                button = (TextView) container.findViewById(R.id.five);
+                button = (Button) container.findViewById(R.id.five);
                 break;
             case 6:
-                button = (TextView) container.findViewById(R.id.six);
+                button = (Button) container.findViewById(R.id.six);
                 break;
             case 7:
-                button = (TextView) container.findViewById(R.id.seven);
+                button = (Button) container.findViewById(R.id.seven);
                 break;
             case 8:
-                button = (TextView) container.findViewById(R.id.eight);
+                button = (Button) container.findViewById(R.id.eight);
                 break;
             case 9:
-                button = (TextView) container.findViewById(R.id.nine);
+                button = (Button) container.findViewById(R.id.nine);
                 break;
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Character character = ((TextView) v).getText().charAt(0);
+                Character character = ((Button) v).getText().charAt(0);
                 mSudoku.drawOnActivePoint(character);
                 if (mCallback != null) {
                     mCallback.onKey(character);

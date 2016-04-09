@@ -1,7 +1,5 @@
 package com.vasko.sudoku;
 
-import android.widget.TextView;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +26,7 @@ public class PointHelper {
         return validChars;
     }
 
-    public static boolean checkNumber(Map<Point, TextView> map, Point point, char number) {
+    public static boolean checkNumber(Map<Point, TextBox> map, Point point, char number) {
         boolean foundError = checkRow(map, point, number);
         if (!foundError) {
             foundError = checkColumn(map, point, number);
@@ -39,13 +37,13 @@ public class PointHelper {
         return foundError;
     }
 
-    private static boolean checkRow(Map<Point, TextView> map, Point point, char number) {
+    private static boolean checkRow(Map<Point, TextBox> map, Point point, char number) {
         for (int x = 1; x < 10; ++x) {
             Point tempPoint = new Point(x, point.getY());
             if (point.equals(tempPoint)) {
                 continue;
             }
-            TextView temp = map.get(tempPoint);
+            TextBox temp = map.get(tempPoint);
             if (temp.getText().length() > 0 && temp.getText().charAt(0) == number) {
                 return true;
             }
@@ -53,13 +51,13 @@ public class PointHelper {
         return false;
     }
 
-    private static boolean checkColumn(Map<Point, TextView> map, Point point, char number) {
+    private static boolean checkColumn(Map<Point, TextBox> map, Point point, char number) {
         for (int y = 1; y < 10; ++y) {
             Point tempPoint = new Point(point.getX(), y);
             if (point.equals(tempPoint)) {
                 continue;
             }
-            TextView temp = map.get(tempPoint);
+            TextBox temp = map.get(tempPoint);
             if (temp.getText().length() > 0 && temp.getText().charAt(0) == number) {
                 return true;
             }
@@ -67,14 +65,14 @@ public class PointHelper {
         return false;
     }
 
-    private static boolean checkBox(Map<Point, TextView> map, Point point, char number) {
+    private static boolean checkBox(Map<Point, TextBox> map, Point point, char number) {
         for (int i = 0, x = (((point.getX() - 1) / 3) * 3) + 1; i < 3; ++i, ++x) {
             for (int j = 0, y = (((point.getY() - 1) / 3) * 3) + 1; j < 3; ++j, ++y) {
                 Point tempPoint = new Point(x, y);
                 if (point.equals(tempPoint)) {
                     continue;
                 }
-                TextView temp = map.get(tempPoint);
+                TextBox temp = map.get(tempPoint);
                 if (temp.getText().length() > 0 && temp.getText().charAt(0) == number) {
                     return true;
                 }

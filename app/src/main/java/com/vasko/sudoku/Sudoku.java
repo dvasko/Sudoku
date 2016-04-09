@@ -1,18 +1,16 @@
 package com.vasko.sudoku;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Sudoku {
-    private Map<Point, TextView> mMap;
+    private Map<Point, TextBox> mMap;
     private Context mContext;
     private Callback mCallback;
     private Point mActivePoint;
@@ -65,40 +63,40 @@ public class Sudoku {
     }
 
     private void initBox(LinearLayout box, int x, int y, int number) {
-        TextView text = null;
+        TextBox text = null;
         switch (number) {
             case 0:
-                text = (TextView) box.findViewById(R.id.one);
+                text = (TextBox) box.findViewById(R.id.one);
                 break;
             case 1:
-                text = (TextView) box.findViewById(R.id.two);
+                text = (TextBox) box.findViewById(R.id.two);
                 break;
             case 2:
-                text = (TextView) box.findViewById(R.id.three);
+                text = (TextBox) box.findViewById(R.id.three);
                 break;
             case 3:
-                text = (TextView) box.findViewById(R.id.four);
+                text = (TextBox) box.findViewById(R.id.four);
                 break;
             case 4:
-                text = (TextView) box.findViewById(R.id.five);
+                text = (TextBox) box.findViewById(R.id.five);
                 break;
             case 5:
-                text = (TextView) box.findViewById(R.id.six);
+                text = (TextBox) box.findViewById(R.id.six);
                 break;
             case 6:
-                text = (TextView) box.findViewById(R.id.seven);
+                text = (TextBox) box.findViewById(R.id.seven);
                 break;
             case 7:
-                text = (TextView) box.findViewById(R.id.eight);
+                text = (TextBox) box.findViewById(R.id.eight);
                 break;
             case 8:
-                text = (TextView) box.findViewById(R.id.nine);
+                text = (TextBox) box.findViewById(R.id.nine);
                 break;
         }
         setupBox(text, x, y, number);
     }
 
-    private void setupBox(TextView text, int x, int y, int number) {
+    private void setupBox(TextBox text, int x, int y, int number) {
         int realX = x * 3 + 1 + (number % 3);
         int realY = y * 3 + 1 + (number / 3);
         final Point point = new Point(realX, realY);
@@ -107,7 +105,7 @@ public class Sudoku {
             public void onClick(View v) {
                 cleanAllBoxes();
                 mActivePoint = point;
-                v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+                v.setSelected(true);
                 if (mCallback != null) {
                     mCallback.onClick(point);
                 }
@@ -117,8 +115,8 @@ public class Sudoku {
     }
 
     private void cleanAllBoxes() {
-        for (TextView box : mMap.values()) {
-            box.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+        for (TextBox box : mMap.values()) {
+            box.setSelected(false);
         }
         mActivePoint = null;
     }
@@ -128,15 +126,11 @@ public class Sudoku {
             throw new IllegalArgumentException("Allowed chars: '1', '2', '3', '4', '5', '6', '7', '8', '9' and ' '");
         }
         if (mActivePoint != null) {
-            TextView box = mMap.get(mActivePoint);
+            TextBox box = mMap.get(mActivePoint);
             box.setText(String.valueOf(number));
             if (number != ' ') {
                 boolean foundError = PointHelper.checkNumber(mMap, mActivePoint, number);
-                if (foundError) {
-                    box.setTextColor(ContextCompat.getColor(mContext, R.color.red));
-                } else {
-                    box.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                }
+                box.setError(foundError);
             }
         }
         cleanAllBoxes();

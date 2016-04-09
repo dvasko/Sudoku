@@ -10,10 +10,11 @@
 
     <style name="TextBox">
 
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@drawable/box_selector</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
+
 
     </style>
 
