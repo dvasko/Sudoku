@@ -197,7 +197,7 @@ public class Sudoku {
             } else if (container == null) {
                 throw new IllegalArgumentException("container must be != null");
             }
-            if(initialMap == null) {
+            if (initialMap == null) {
                 initialMap = new HashMap<>();
             }
             return new Sudoku(context, initialMap, container, callback);
