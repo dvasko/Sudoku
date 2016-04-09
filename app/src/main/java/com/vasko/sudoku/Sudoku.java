@@ -11,11 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Sudoku {
+    private final Map<Point, Character> mInitialMap;
     private final Map<Point, TextBox> mMap;
     private final Callback mCallback;
     private Point mActivePoint;
 
-    private Sudoku(Context context, ViewGroup container, Callback callback) {
+    private Sudoku(Context context, Map<Point, Character> initialMap, ViewGroup container, Callback callback) {
+        mInitialMap = initialMap;
         mCallback = callback;
         mMap = new HashMap<>();
 
@@ -25,6 +27,7 @@ public class Sudoku {
         for (int y = 0; y < 3; ++y) {
             initRow(sudokuLayout, y);
         }
+        resetToStart();
     }
 
     private void initRow(ViewGroup sudoku, int y) {
@@ -126,10 +129,10 @@ public class Sudoku {
         drawPoint(mActivePoint, number);
     }
 
-    public void drawStart(HashMap<Point, Character> initial) {
+    public void resetToStart() {
         clearAllData();
-        for (Point point : initial.keySet()) {
-            Character number = initial.get(point);
+        for (Point point : mInitialMap.keySet()) {
+            Character number = mInitialMap.get(point);
             drawPoint(point, number);
         }
     }
@@ -138,6 +141,11 @@ public class Sudoku {
         for (Point point : mMap.keySet()) {
             drawPoint(point, ' ');
         }
+    }
+
+    public void solve() {
+        resetToStart();
+        SudokuSolver.test(mMap);
     }
 
     private void drawPoint(Point point, char number) {
@@ -150,6 +158,8 @@ public class Sudoku {
             if (number != ' ') {
                 boolean foundError = PointHelper.checkNumber(mMap, point, number);
                 box.setError(foundError);
+            } else {
+                box.setError(false);
             }
         }
         cleanSelectorOnAllBoxes();
@@ -159,6 +169,7 @@ public class Sudoku {
         private Context context;
         private ViewGroup container;
         private Callback callback;
+        private Map<Point, Character> initialMap;
 
         public Builder context(Context context) {
             this.context = context;
@@ -175,13 +186,21 @@ public class Sudoku {
             return this;
         }
 
+        public Builder initial(Map<Point, Character> initialMap) {
+            this.initialMap = initialMap;
+            return this;
+        }
+
         public Sudoku build() {
             if (context == null) {
                 throw new IllegalArgumentException("context must be != null");
             } else if (container == null) {
                 throw new IllegalArgumentException("container must be != null");
             }
-            return new Sudoku(context, container, callback);
+            if(initialMap == null) {
+                initialMap = new HashMap<>();
+            }
+            return new Sudoku(context, initialMap, container, callback);
         }
     }
 

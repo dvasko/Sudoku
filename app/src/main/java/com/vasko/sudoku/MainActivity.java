@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 .context(this)
                 .layout(sudokuContainer)
                 .click(null)
+                .initial(getMap())
                 .build();
 
         ViewGroup keyboardContainer = (ViewGroup) findViewById(R.id.keyboard_container);
@@ -36,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
                 .sudoku(sudoku)
                 .click(null)
                 .build();
-
-        start();
 
     }
 
@@ -53,13 +52,23 @@ public class MainActivity extends AppCompatActivity {
                 animation.setInterpolator(new AccelerateDecelerateInterpolator());
                 animation.setDuration(400);
                 imageView.startAnimation(animation);
-                start();
+                sudoku.resetToStart();
             }
         });
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void start() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.solve:
+                sudoku.solve();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private HashMap<Point, Character> getMap() {
         HashMap<Point, Character> initial = new HashMap<>();
         initial.put(new Point(1, 1), '7');
         initial.put(new Point(2, 1), '3');
@@ -107,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         initial.put(new Point(6, 9), '5');
         initial.put(new Point(8, 9), '9');
         initial.put(new Point(9, 9), '2');
-        sudoku.drawStart(initial);
+        return initial;
     }
 
 
