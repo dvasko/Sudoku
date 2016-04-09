@@ -1,6 +1,7 @@
 package com.vasko.sudoku;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import java.util.Set;
 
 public class Sudoku {
     private Map<Point, TextView> mMap;
+    private Context mContext;
     private Callback mCallback;
     private Set<Character> mValidChars;
     private Point mActivePoint;
 
     private Sudoku(Context context, ViewGroup container, Callback callback) {
+        mContext = context;
         mCallback = callback;
         mMap = new HashMap<>();
         mValidChars = initValidChars();
@@ -121,13 +124,22 @@ public class Sudoku {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cleanAllBoxes();
                 mActivePoint = point;
+                v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
                 if (mCallback != null) {
                     mCallback.onClick(point);
                 }
             }
         });
         mMap.put(point, text);
+    }
+
+    private void cleanAllBoxes() {
+        for (TextView box : mMap.values()) {
+            box.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+        }
+        mActivePoint = null;
     }
 
     public void drawOnActivePoint(char number) {
@@ -137,7 +149,7 @@ public class Sudoku {
         if (mActivePoint != null) {
             mMap.get(mActivePoint).setText(String.valueOf(number));
         }
-        mActivePoint = null;
+        cleanAllBoxes();
     }
 
 
