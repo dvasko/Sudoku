@@ -12,10 +12,10 @@
     tools:context="com.vasko.sudoku.MainActivity">
 
     <include
+        android:id="@+id/sudoku"
         layout="@layout/sudoku_layout"
         android:layout_width="380dp"
         android:layout_height="380dp"/>
-
 
 
 </LinearLayout>
