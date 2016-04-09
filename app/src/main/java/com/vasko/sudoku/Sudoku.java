@@ -103,7 +103,7 @@ public class Sudoku {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cleanAllBoxes();
+                cleanSelectorOnAllBoxes();
                 mActivePoint = point;
                 v.setSelected(true);
                 if (mCallback != null) {
@@ -114,7 +114,7 @@ public class Sudoku {
         mMap.put(point, text);
     }
 
-    private void cleanAllBoxes() {
+    private void cleanSelectorOnAllBoxes() {
         for (TextBox box : mMap.values()) {
             box.setSelected(false);
         }
@@ -122,20 +122,37 @@ public class Sudoku {
     }
 
     public void drawOnActivePoint(char number) {
+        drawPoint(mActivePoint, number);
+    }
+
+    public void drawStart(HashMap<Point, Character> initial) {
+        clearAllData();
+        for (Point point : initial.keySet()) {
+            Character number = initial.get(point);
+            drawPoint(point, number);
+        }
+    }
+
+    private void clearAllData() {
+        for (Point point : mMap.keySet()) {
+            drawPoint(point, ' ');
+        }
+    }
+
+    private void drawPoint(Point point, char number) {
         if (!PointHelper.getAllowedChars().contains(number)) {
             throw new IllegalArgumentException("Allowed chars: '1', '2', '3', '4', '5', '6', '7', '8', '9' and ' '");
         }
-        if (mActivePoint != null) {
-            TextBox box = mMap.get(mActivePoint);
+        if (point != null) {
+            TextBox box = mMap.get(point);
             box.setText(String.valueOf(number));
             if (number != ' ') {
-                boolean foundError = PointHelper.checkNumber(mMap, mActivePoint, number);
+                boolean foundError = PointHelper.checkNumber(mMap, point, number);
                 box.setError(foundError);
             }
         }
-        cleanAllBoxes();
+        cleanSelectorOnAllBoxes();
     }
-
 
     public static class Builder {
         private Context context;
