@@ -2,9 +2,6 @@ package com.vasko.sudoku;
 
 import java.util.Map;
 
-/**
- * Created by Dejan on 09.04.16. at 21:57.
- */
 public class SudokuSolver {
 
     // dimension of input
@@ -132,7 +129,7 @@ public class SudokuSolver {
         return false;
     }
 
-    public static void test(Map<Point, TextBox> mMap) {
+    public static void startSolving(Map<Point, TextBox> mMap) {
         transformMapToGrid(mMap);
         boolean solved = solve(new Cell(0, 0));
         if (solved) {

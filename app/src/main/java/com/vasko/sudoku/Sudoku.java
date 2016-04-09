@@ -145,7 +145,7 @@ public class Sudoku {
 
     public void solve() {
         resetToStart();
-        SudokuSolver.test(mMap);
+        SudokuSolver.startSolving(mMap);
     }
 
     private void drawPoint(Point point, char number) {
