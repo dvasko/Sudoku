@@ -1,5 +1,6 @@
 package com.vasko.sudoku;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SudokuSolver {
@@ -16,12 +17,13 @@ public class SudokuSolver {
             {0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
-    public static void startSolving(Map<Point, TextBox> mMap) {
+    public static Map<Point, Integer> getSolvedMap(Map<Point, Integer> mMap) {
         transformMapToGrid(mMap);
         boolean solved = solve(new Cell(0, 0));
         if (solved) {
-            transformGridToMap(mMap);
+            return transformGridToMap();
         }
+        return null;
     }
 
     // everything is put together here
@@ -133,21 +135,19 @@ public class SudokuSolver {
         return new Cell(row, col);
     }
 
-    private static void transformGridToMap(Map<Point, TextBox> map) {
-        for (Point point : map.keySet()) {
-            TextBox text = map.get(point);
-            String number = String.valueOf(grid[point.getX() - 1][point.getY() - 1]);
-            text.setText(number);
+    private static Map<Point, Integer> transformGridToMap() {
+        Map<Point, Integer> map = new HashMap<>();
+        for (int x = 0; x < 9; ++x) {
+            for (int y = 0; y < 9; ++y) {
+                map.put(new Point(x + 1, y + 1), grid[x][y]);
+            }
         }
+        return map;
     }
 
-    private static void transformMapToGrid(Map<Point, TextBox> map) {
+    private static void transformMapToGrid(Map<Point, Integer> map) {
         for (Point point : map.keySet()) {
-            String text = map.get(point).getText().toString();
-            if(text.isEmpty()) {
-                continue;
-            }
-            grid[point.getX() - 1][point.getY() - 1] = Integer.parseInt(text);
+            grid[point.getX() - 1][point.getY() - 1] = map.get(point);
         }
     }
 

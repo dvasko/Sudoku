@@ -1,31 +1,33 @@
 package com.vasko.sudoku;
 
-import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Sudoku {
     private final Map<Point, Integer> mInitialMap;
-    private final Map<Point, TextBox> mMap;
+    private final Map<Point, Integer> mSolvedMap;
+    private final Map<Point, Box> mMap;
     private Point mActivePoint;
 
-    private Sudoku(Context context, Map<Point, Integer> initialMap, ViewGroup container) {
-        mInitialMap = initialMap;
+    private Sudoku(Map<Point, Integer> initialMap, ViewGroup container) {
         mMap = new HashMap<>();
+        mInitialMap = initialMap;
+        mSolvedMap = SudokuSolver.getSolvedMap(mInitialMap);
 
-        LayoutInflater.from(context).inflate(R.layout.sudoku_layout, container, true);
+        LayoutInflater.from(container.getContext()).inflate(R.layout.sudoku_layout, container, true);
         ViewGroup sudokuLayout = (ViewGroup) container.findViewById(R.id.sudoku_layout);
         ViewCompat.setElevation(sudokuLayout, PointHelper.convertDpToPixel(8));
         for (int y = 0; y < 3; ++y) {
             initRow(sudokuLayout, y);
         }
-        resetToStart();
+        drawInitialSudoku();
     }
 
     private void initRow(ViewGroup sudoku, int y) {
@@ -65,40 +67,40 @@ public class Sudoku {
     }
 
     private void initBox(LinearLayout box, int x, int y, int number) {
-        TextBox text = null;
+        TextView text = null;
         switch (number) {
             case 0:
-                text = (TextBox) box.findViewById(R.id.one);
+                text = (TextView) box.findViewById(R.id.one);
                 break;
             case 1:
-                text = (TextBox) box.findViewById(R.id.two);
+                text = (TextView) box.findViewById(R.id.two);
                 break;
             case 2:
-                text = (TextBox) box.findViewById(R.id.three);
+                text = (TextView) box.findViewById(R.id.three);
                 break;
             case 3:
-                text = (TextBox) box.findViewById(R.id.four);
+                text = (TextView) box.findViewById(R.id.four);
                 break;
             case 4:
-                text = (TextBox) box.findViewById(R.id.five);
+                text = (TextView) box.findViewById(R.id.five);
                 break;
             case 5:
-                text = (TextBox) box.findViewById(R.id.six);
+                text = (TextView) box.findViewById(R.id.six);
                 break;
             case 6:
-                text = (TextBox) box.findViewById(R.id.seven);
+                text = (TextView) box.findViewById(R.id.seven);
                 break;
             case 7:
-                text = (TextBox) box.findViewById(R.id.eight);
+                text = (TextView) box.findViewById(R.id.eight);
                 break;
             case 8:
-                text = (TextBox) box.findViewById(R.id.nine);
+                text = (TextView) box.findViewById(R.id.nine);
                 break;
         }
         setupBox(text, x, y, number);
     }
 
-    private void setupBox(TextBox text, int x, int y, int number) {
+    private void setupBox(TextView text, int x, int y, int number) {
         int realX = x * 3 + 1 + (number % 3);
         int realY = y * 3 + 1 + (number / 3);
         final Point point = new Point(realX, realY);
@@ -110,37 +112,36 @@ public class Sudoku {
                 v.setSelected(true);
             }
         });
-        mMap.put(point, text);
+        mMap.put(point, new Box(text));
     }
 
     private void cleanSelectorOnAllBoxes() {
-        for (TextBox box : mMap.values()) {
+        for (Box box : mMap.values()) {
             box.setSelected(false);
         }
         mActivePoint = null;
     }
 
-    public void drawOnActivePoint(int number) {
-        drawPoint(mActivePoint, number);
-    }
-
-    public void resetToStart() {
-        clearAllData();
-        for (Point point : mInitialMap.keySet()) {
-            int number = mInitialMap.get(point);
-            drawPoint(point, number);
-        }
-    }
-
-    private void clearAllData() {
+    public void drawInitialSudoku() {
         for (Point point : mMap.keySet()) {
             drawPoint(point, 0);
         }
+        for (Point point : mInitialMap.keySet()) {
+            drawPoint(point, mInitialMap.get(point));
+        }
     }
 
-    public void solve() {
-        resetToStart();
-        SudokuSolver.startSolving(mMap);
+    public void drawSolvedSudoku() {
+        for (Point point : mMap.keySet()) {
+            drawPoint(point, 0);
+        }
+        for (Point point : mSolvedMap.keySet()) {
+            drawPoint(point, mSolvedMap.get(point));
+        }
+    }
+
+    public void drawOnActivePoint(int number) {
+        drawPoint(mActivePoint, number);
     }
 
     private void drawPoint(Point point, int number) {
@@ -148,28 +149,17 @@ public class Sudoku {
             throw new IllegalArgumentException("Allowed integers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9'");
         }
         if (point != null) {
-            TextBox box = mMap.get(point);
-            if (number > 0) {
-                box.setText(String.valueOf(number));
-                boolean foundError = PointHelper.checkNumber(mMap, point, number);
-                box.setError(foundError);
-            } else {
-                box.setText("");
-                box.setError(false);
-            }
+            Box box = mMap.get(point);
+            box.setValue(number);
+            boolean foundError = PointHelper.checkNumber(mMap, point, number);
+            box.setError(foundError);
         }
         cleanSelectorOnAllBoxes();
     }
 
     public static class Builder {
-        private Context context;
         private ViewGroup container;
         private Map<Point, Integer> initialMap;
-
-        public Builder context(Context context) {
-            this.context = context;
-            return this;
-        }
 
         public Builder layout(ViewGroup container) {
             this.container = container;
@@ -182,15 +172,13 @@ public class Sudoku {
         }
 
         public Sudoku build() {
-            if (context == null) {
-                throw new IllegalArgumentException("context must be != null");
-            } else if (container == null) {
+            if (container == null) {
                 throw new IllegalArgumentException("container must be != null");
             }
             if (initialMap == null) {
                 initialMap = new HashMap<>();
             }
-            return new Sudoku(context, initialMap, container);
+            return new Sudoku(initialMap, container);
         }
     }
 

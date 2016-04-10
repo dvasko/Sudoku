@@ -24,14 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
         ViewGroup sudokuContainer = (ViewGroup) findViewById(R.id.sudoku_container);
         sudoku = new Sudoku.Builder()
-                .context(this)
                 .layout(sudokuContainer)
                 .initial(getMap())
                 .build();
 
         ViewGroup keyboardContainer = (ViewGroup) findViewById(R.id.keyboard_container);
         new Keyboard.Builder()
-                .context(this)
                 .layout(keyboardContainer)
                 .sudoku(sudoku)
                 .build();
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 animation.setInterpolator(new AccelerateDecelerateInterpolator());
                 animation.setDuration(400);
                 imageView.startAnimation(animation);
-                sudoku.resetToStart();
+                sudoku.drawInitialSudoku();
             }
         });
         item.getActionView().setOnLongClickListener(new View.OnLongClickListener() {
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.solve:
-                sudoku.solve();
+                sudoku.drawSolvedSudoku();
                 break;
         }
         return super.onOptionsItemSelected(item);

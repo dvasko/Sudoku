@@ -1,6 +1,5 @@
 package com.vasko.sudoku;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +8,11 @@ import android.widget.Toast;
 
 public class Keyboard {
 
-    private final Context mContext;
     private final Sudoku mSudoku;
 
-    private Keyboard(Context context, final Sudoku sudoku, ViewGroup container) {
-        mContext = context;
+    private Keyboard(final Sudoku sudoku, ViewGroup container) {
         mSudoku = sudoku;
-
-        LayoutInflater.from(context).inflate(R.layout.keyboard_layout, container, true);
+        LayoutInflater.from(container.getContext()).inflate(R.layout.keyboard_layout, container, true);
         for (int i = -1; i < 10; ++i) {
             setupKey(container, i);
         }
@@ -30,7 +26,7 @@ public class Keyboard {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "TODO", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "TODO", Toast.LENGTH_SHORT).show();
                     }
                 });
                 return;
@@ -74,14 +70,8 @@ public class Keyboard {
     }
 
     public static class Builder {
-        private Context context;
         private ViewGroup container;
         private Sudoku sudoku;
-
-        public Builder context(Context context) {
-            this.context = context;
-            return this;
-        }
 
         public Builder layout(ViewGroup container) {
             this.container = container;
@@ -94,14 +84,12 @@ public class Keyboard {
         }
 
         public Keyboard build() {
-            if (context == null) {
-                throw new IllegalArgumentException("context must be != null");
-            } else if (container == null) {
+            if (container == null) {
                 throw new IllegalArgumentException("container must be != null");
             } else if (sudoku == null) {
                 throw new IllegalArgumentException("sudoku must be != null");
             }
-            return new Keyboard(context, sudoku, container);
+            return new Keyboard(sudoku, container);
         }
     }
 }
