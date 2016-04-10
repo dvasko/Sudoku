@@ -18,7 +18,7 @@
 
         <Button
             android:id="@+id/one"
-            style="@style/TextKeyboard"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -27,7 +27,7 @@
 
         <Button
             android:id="@+id/two"
-            style="@style/TextKeyboard"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -36,7 +36,7 @@
 
         <Button
             android:id="@+id/three"
-            style="@style/TextKeyboard"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -44,23 +44,12 @@
             android:text="3"/>
 
         <Button
-            android:id="@+id/four"
-            style="@style/TextKeyboard"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:layout_weight="1"
-            android:text="4"/>
-
-        <Button
-            android:id="@+id/five"
-            style="@style/TextKeyboard"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:text="5"/>
-
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
@@ -71,8 +60,26 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/four"
+            style="@style/NumberKeyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:text="4"/>
+
+        <Button
+            android:id="@+id/five"
+            style="@style/NumberKeyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:text="5"/>
+
+        <Button
             android:id="@+id/six"
-            style="@style/TextKeyboard"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -80,8 +87,25 @@
             android:text="6"/>
 
         <Button
-            android:id="@+id/seven"
+            android:id="@+id/hint"
             style="@style/TextKeyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:text="@string/hint"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/seven"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -90,7 +114,7 @@
 
         <Button
             android:id="@+id/eight"
-            style="@style/TextKeyboard"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -99,7 +123,7 @@
 
         <Button
             android:id="@+id/nine"
-            style="@style/TextKeyboard"
+            style="@style/NumberKeyboard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
@@ -113,7 +137,7 @@
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:layout_weight="1"
-            android:text=" "/>
+            android:text="@string/clear"/>
 
     </LinearLayout>
 

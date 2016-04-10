@@ -5,16 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Keyboard {
 
+    private final Context mContext;
     private final Sudoku mSudoku;
 
     private Keyboard(Context context, final Sudoku sudoku, ViewGroup container) {
-        this.mSudoku = sudoku;
+        mContext = context;
+        mSudoku = sudoku;
 
         LayoutInflater.from(context).inflate(R.layout.keyboard_layout, container, true);
-        for (int i = 0; i < 10; ++i) {
+        for (int i = -1; i < 10; ++i) {
             setupKey(container, i);
         }
     }
@@ -22,9 +25,24 @@ public class Keyboard {
     private void setupKey(ViewGroup container, int number) {
         Button button = null;
         switch (number) {
+            case -1:
+                button = (Button) container.findViewById(R.id.hint);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mContext, "TODO", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
             case 0:
                 button = (Button) container.findViewById(R.id.empty);
-                break;
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSudoku.drawOnActivePoint(' ');
+                    }
+                });
+                return;
             case 1:
                 button = (Button) container.findViewById(R.id.one);
                 break;
