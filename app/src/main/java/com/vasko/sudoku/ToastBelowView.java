@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 public class ToastBelowView {
 
-    public static void show(View view, String text){
+    public static void show(View view, String text) {
         final int[] screenPos = new int[2];
         final Rect displayFrame = new Rect();
         view.getLocationOnScreen(screenPos);

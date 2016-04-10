@@ -5,8 +5,8 @@ import android.widget.TextView;
 
 public class Box {
 
+    private final TextView textView;
     private int value;
-    private TextView textView;
     private boolean foundError;
 
     public Box(TextView textView) {
