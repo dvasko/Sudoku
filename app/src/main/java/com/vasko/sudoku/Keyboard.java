@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class Keyboard {
 
@@ -26,7 +25,7 @@ public class Keyboard {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "TODO", Toast.LENGTH_SHORT).show();
+                        mSudoku.drawHintOnActivePoint();
                     }
                 });
                 return;

@@ -1,11 +1,13 @@
 package com.vasko.sudoku;
 
+import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +16,16 @@ public class Sudoku {
     private final Map<Point, Integer> mInitialMap;
     private final Map<Point, Integer> mSolvedMap;
     private final Map<Point, Box> mMap;
+    private final Context mContext;
     private Point mActivePoint;
 
     private Sudoku(Map<Point, Integer> initialMap, ViewGroup container) {
         mMap = new HashMap<>();
         mInitialMap = initialMap;
         mSolvedMap = SudokuSolver.getSolvedMap(mInitialMap);
+        mContext = container.getContext();
 
-        LayoutInflater.from(container.getContext()).inflate(R.layout.sudoku_layout, container, true);
+        LayoutInflater.from(mContext).inflate(R.layout.sudoku_layout, container, true);
         ViewGroup sudokuLayout = (ViewGroup) container.findViewById(R.id.sudoku_layout);
         ViewCompat.setElevation(sudokuLayout, PointHelper.convertDpToPixel(8));
         for (int y = 0; y < 3; ++y) {
@@ -136,6 +140,15 @@ public class Sudoku {
         cleanSelectorOnAllBoxes();
     }
 
+    public void drawHintOnActivePoint() {
+        if (mSolvedMap.get(mActivePoint) != null) {
+            drawNumberOnPoint(mActivePoint, mSolvedMap.get(mActivePoint));
+            cleanSelectorOnAllBoxes();
+        } else {
+            Toast.makeText(mContext, R.string.select_field, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void clearSudokuField() {
         for (Point point : mMap.keySet()) {
             drawNumberOnPoint(point, 0);
@@ -158,6 +171,8 @@ public class Sudoku {
             box.setValue(number);
             boolean foundError = PointHelper.checkNumber(mMap, point, number);
             box.setError(foundError);
+        } else {
+            Toast.makeText(mContext, R.string.select_field, Toast.LENGTH_SHORT).show();
         }
     }
 
