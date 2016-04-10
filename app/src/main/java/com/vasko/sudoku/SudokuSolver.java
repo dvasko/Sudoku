@@ -16,6 +16,62 @@ public class SudokuSolver {
             {0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
+    public static void startSolving(Map<Point, TextBox> mMap) {
+        transformMapToGrid(mMap);
+        boolean solved = solve(new Cell(0, 0));
+        if (solved) {
+            transformGridToMap(mMap);
+        }
+    }
+
+    // everything is put together here
+    // very simple solution
+    // must return true, if the sudoku is solved, return false otherwise
+    private static boolean solve(Cell cell) {
+
+        // if the cell is null, we have reached the end
+        if (cell == null)
+            return true;
+
+        // if grid[cur] already has a value, there is nothing to solve here,
+        // continue on to next cell
+        if (grid[cell.row][cell.col] != 0) {
+            // return whatever is being returned by solve(next)
+            // i.e the state of sudoku's solution is not being determined by
+            // this cell, but by other cells
+            return solve(getNextCell(cell));
+        }
+
+        // this is where each possible value is being assigned to the cell, and
+        // checked if a solutions could be arrived at.
+
+        // if grid[cur] doesn't have a value
+        // try each possible value
+        for (int i = 1; i <= 9; i++) {
+            // check if valid, if valid, then update
+            boolean valid = isValid(cell, i);
+
+            if (!valid) // i not valid for this cell, try other values
+                continue;
+
+            // assign here
+            grid[cell.row][cell.col] = i;
+
+            // continue with next cell
+            boolean solved = solve(getNextCell(cell));
+            // if solved, return, else try other values
+            if (solved)
+                return true;
+            else
+                grid[cell.row][cell.col] = 0; // reset
+            // continue with other possible values
+        }
+
+        // if you reach here, then no value from 1 - 9 for this cell can solve
+        // return false
+        return false;
+    }
+
     private static boolean isValid(Cell cell, int value) {
 
         if (grid[cell.row][cell.col] != 0) {
@@ -75,62 +131,6 @@ public class SudokuSolver {
             return null; // reached end
 
         return new Cell(row, col);
-    }
-
-    // everything is put together here
-    // very simple solution
-    // must return true, if the sudoku is solved, return false otherwise
-    private static boolean solve(Cell cell) {
-
-        // if the cell is null, we have reached the end
-        if (cell == null)
-            return true;
-
-        // if grid[cur] already has a value, there is nothing to solve here,
-        // continue on to next cell
-        if (grid[cell.row][cell.col] != 0) {
-            // return whatever is being returned by solve(next)
-            // i.e the state of sudoku's solution is not being determined by
-            // this cell, but by other cells
-            return solve(getNextCell(cell));
-        }
-
-        // this is where each possible value is being assigned to the cell, and
-        // checked if a solutions could be arrived at.
-
-        // if grid[cur] doesn't have a value
-        // try each possible value
-        for (int i = 1; i <= 9; i++) {
-            // check if valid, if valid, then update
-            boolean valid = isValid(cell, i);
-
-            if (!valid) // i not valid for this cell, try other values
-                continue;
-
-            // assign here
-            grid[cell.row][cell.col] = i;
-
-            // continue with next cell
-            boolean solved = solve(getNextCell(cell));
-            // if solved, return, else try other values
-            if (solved)
-                return true;
-            else
-                grid[cell.row][cell.col] = 0; // reset
-            // continue with other possible values
-        }
-
-        // if you reach here, then no value from 1 - 9 for this cell can solve
-        // return false
-        return false;
-    }
-
-    public static void startSolving(Map<Point, TextBox> mMap) {
-        transformMapToGrid(mMap);
-        boolean solved = solve(new Cell(0, 0));
-        if (solved) {
-            transformGridToMap(mMap);
-        }
     }
 
     private static void transformGridToMap(Map<Point, TextBox> map) {
