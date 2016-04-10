@@ -17,6 +17,10 @@ public class Box {
         return value;
     }
 
+    public boolean hasError() {
+        return foundError;
+    }
+
     public void setValue(int number) {
         value = number;
         if (number > 0) {

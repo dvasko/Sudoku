@@ -138,12 +138,14 @@ public class Sudoku {
     public void drawNumberOnActivePoint(int number) {
         drawNumberOnPoint(mActivePoint, number);
         cleanSelectorOnAllBoxes();
+        checkWin();
     }
 
     public void drawHintOnActivePoint() {
         if (mSolvedMap.get(mActivePoint) != null) {
             drawNumberOnPoint(mActivePoint, mSolvedMap.get(mActivePoint));
             cleanSelectorOnAllBoxes();
+            checkWin();
         } else {
             Toast.makeText(mContext, R.string.select_field, Toast.LENGTH_SHORT).show();
         }
@@ -160,6 +162,16 @@ public class Sudoku {
             box.setSelected(false);
         }
         mActivePoint = null;
+    }
+
+    public void checkWin() {
+        for (Point point : mMap.keySet()) {
+            Box box = mMap.get(point);
+            if (box.getValue() <= 0 || box.hasError()) {
+                return;
+            }
+        }
+        Toast.makeText(mContext, R.string.won, Toast.LENGTH_SHORT).show();
     }
 
     private void drawNumberOnPoint(Point point, int number) {
