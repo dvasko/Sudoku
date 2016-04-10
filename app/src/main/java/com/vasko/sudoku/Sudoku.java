@@ -25,6 +25,7 @@ public class Sudoku {
         mSolvedMap = SudokuSolver.getSolvedMap(mInitialMap);
         mContext = container.getContext();
 
+        container.removeAllViews();
         LayoutInflater.from(mContext).inflate(R.layout.sudoku_layout, container, true);
         ViewGroup sudokuLayout = (ViewGroup) container.findViewById(R.id.sudoku_layout);
         ViewCompat.setElevation(sudokuLayout, PointHelper.convertDpToPixel(8));
@@ -123,6 +124,7 @@ public class Sudoku {
         clearSudokuField();
         for (Point point : mInitialMap.keySet()) {
             drawNumberOnPoint(point, mInitialMap.get(point));
+            mMap.get(point).disable();
         }
         cleanSelectorOnAllBoxes();
     }

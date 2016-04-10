@@ -11,6 +11,8 @@ public class Keyboard {
 
     private Keyboard(final Sudoku sudoku, ViewGroup container) {
         mSudoku = sudoku;
+
+        container.removeAllViews();
         LayoutInflater.from(container.getContext()).inflate(R.layout.keyboard_layout, container, true);
         for (int i = -1; i < 10; ++i) {
             setupKey(container, i);

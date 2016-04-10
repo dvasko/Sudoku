@@ -50,4 +50,7 @@ public class Box {
         }
     }
 
+    public void disable() {
+        textView.setEnabled(false);
+    }
 }
