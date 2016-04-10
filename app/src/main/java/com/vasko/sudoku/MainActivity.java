@@ -15,6 +15,8 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String RESTORED_SUDOKU = "RESTORED_SUDOKU";
+
     private Sudoku sudoku;
 
     @Override
@@ -34,6 +36,16 @@ public class MainActivity extends AppCompatActivity {
                 .sudoku(sudoku)
                 .build();
 
+        if (savedInstanceState != null) {
+            Sudoku restoredSudoku = (Sudoku) savedInstanceState.getSerializable(RESTORED_SUDOKU);
+            sudoku.onRestoreState(restoredSudoku);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(RESTORED_SUDOKU, sudoku);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

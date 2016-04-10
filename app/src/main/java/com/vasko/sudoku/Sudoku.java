@@ -9,10 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Sudoku {
+public class Sudoku implements Serializable {
     private final Map<Point, Integer> mInitialMap;
     private final Map<Point, Integer> mSolvedMap;
     private final Map<Point, Box> mMap;
@@ -187,6 +188,12 @@ public class Sudoku {
             box.setError(foundError);
         } else {
             Toast.makeText(mContext, R.string.select_field, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onRestoreState(Sudoku restoredSudoku) {
+        for (Point point : restoredSudoku.mMap.keySet()) {
+            drawNumberOnPoint(point, restoredSudoku.mMap.get(point).getValue());
         }
     }
 
