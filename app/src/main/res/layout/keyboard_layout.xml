@@ -17,6 +17,14 @@
         android:orientation="horizontal">
 
         <Button
+            style="@style/NumberKeyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
+
+        <Button
             android:id="@+id/one"
             style="@style/NumberKeyboard"
             android:layout_width="0dp"
@@ -43,14 +51,6 @@
             android:layout_weight="1"
             android:text="3"/>
 
-        <Button
-            style="@style/NumberKeyboard"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:visibility="invisible"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -58,6 +58,15 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/hint"
+            style="@style/TextKeyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:text="@string/hint"/>
 
         <Button
             android:id="@+id/four"
@@ -86,15 +95,6 @@
             android:layout_weight="1"
             android:text="6"/>
 
-        <Button
-            android:id="@+id/hint"
-            style="@style/TextKeyboard"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:text="@string/hint"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -102,6 +102,15 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/empty"
+            style="@style/TextKeyboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:text="@string/clear"/>
 
         <Button
             android:id="@+id/seven"
@@ -129,15 +138,6 @@
             android:layout_margin="1dp"
             android:layout_weight="1"
             android:text="9"/>
-
-        <Button
-            android:id="@+id/empty"
-            style="@style/TextKeyboard"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:text="@string/clear"/>
 
     </LinearLayout>
 
