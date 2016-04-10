@@ -109,7 +109,7 @@ public class Sudoku {
             public void onClick(View v) {
                 cleanSelectorOnAllBoxes();
                 mActivePoint = point;
-                v.setSelected(true);
+                mMap.get(point).setSelected(true);
             }
         });
         mMap.put(point, new Box(text));

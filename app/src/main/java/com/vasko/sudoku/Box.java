@@ -7,6 +7,7 @@ public class Box {
 
     private int value;
     private TextView textView;
+    private boolean foundError;
 
     public Box(TextView textView) {
         this.textView = textView;
@@ -27,9 +28,17 @@ public class Box {
 
     public void setSelected(boolean selected) {
         textView.setSelected(selected);
+        if (!foundError) {
+            if (selected) {
+                textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.white));
+            } else {
+                textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.black));
+            }
+        }
     }
 
     public void setError(boolean foundError) {
+        this.foundError = foundError;
         if (foundError) {
             textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.red));
         } else {
