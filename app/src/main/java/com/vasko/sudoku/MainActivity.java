@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
                 sudoku.resetToStart();
             }
         });
+        item.getActionView().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastBelowView.show(v, getString(R.string.restart));
+                return true;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 
