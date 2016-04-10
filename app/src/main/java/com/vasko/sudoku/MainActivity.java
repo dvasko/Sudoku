@@ -43,12 +43,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(RESTORED_SUDOKU, sudoku);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         MenuItem item = menu.findItem(R.id.refresh);
@@ -81,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(RESTORED_SUDOKU, sudoku);
+        super.onSaveInstanceState(outState);
     }
 
     private HashMap<Point, Integer> getMap() {
