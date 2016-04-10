@@ -19,7 +19,7 @@ public class SudokuSolver {
 
     public static Map<Point, Integer> getSolvedMap(Map<Point, Integer> mMap) {
         transformMapToGrid(mMap);
-        boolean solved = solve(new Cell(0, 0));
+        boolean solved = solve(new Point(1, 1));
         if (solved) {
             return transformGridToMap();
         }
@@ -29,19 +29,19 @@ public class SudokuSolver {
     // everything is put together here
     // very simple solution
     // must return true, if the sudoku is solved, return false otherwise
-    private static boolean solve(Cell cell) {
+    private static boolean solve(Point point) {
 
         // if the cell is null, we have reached the end
-        if (cell == null)
+        if (point == null)
             return true;
 
         // if grid[cur] already has a value, there is nothing to solve here,
         // continue on to next cell
-        if (grid[cell.row][cell.col] != 0) {
+        if (grid[point.getX() - 1][point.getY() - 1] != 0) {
             // return whatever is being returned by solve(next)
             // i.e the state of sudoku's solution is not being determined by
             // this cell, but by other cells
-            return solve(getNextCell(cell));
+            return solve(getNextCell(point));
         }
 
         // this is where each possible value is being assigned to the cell, and
@@ -51,21 +51,21 @@ public class SudokuSolver {
         // try each possible value
         for (int i = 1; i <= 9; i++) {
             // check if valid, if valid, then update
-            boolean valid = isValid(cell, i);
+            boolean valid = isValid(point, i);
 
             if (!valid) // i not valid for this cell, try other values
                 continue;
 
             // assign here
-            grid[cell.row][cell.col] = i;
+            grid[point.getX() - 1][point.getY() - 1] = i;
 
             // continue with next cell
-            boolean solved = solve(getNextCell(cell));
+            boolean solved = solve(getNextCell(point));
             // if solved, return, else try other values
             if (solved)
                 return true;
             else
-                grid[cell.row][cell.col] = 0; // reset
+                grid[point.getX() - 1][point.getY() - 1] = 0; // reset
             // continue with other possible values
         }
 
@@ -74,30 +74,30 @@ public class SudokuSolver {
         return false;
     }
 
-    private static boolean isValid(Cell cell, int value) {
+    private static boolean isValid(Point point, int value) {
 
-        if (grid[cell.row][cell.col] != 0) {
+        if (grid[point.getX() - 1][point.getY() - 1] != 0) {
             throw new RuntimeException(
                     "Cannot call for cell which already has a value");
         }
 
         // if v present row, return false
         for (int c = 0; c < 9; c++) {
-            if (grid[cell.row][c] == value)
+            if (grid[point.getX() - 1][c] == value)
                 return false;
         }
 
         // if v present in col, return false
         for (int r = 0; r < 9; r++) {
-            if (grid[r][cell.col] == value)
+            if (grid[r][point.getY() - 1] == value)
                 return false;
         }
 
         // if v present in grid, return false
 
         // to get the grid we should calculate (x1,y1) (x2,y2)
-        int x1 = 3 * (cell.row / 3);
-        int y1 = 3 * (cell.col / 3);
+        int x1 = 3 * ((point.getX() - 1) / 3);
+        int y1 = 3 * ((point.getY() - 1) / 3);
         int x2 = x1 + 2;
         int y2 = y1 + 2;
 
@@ -112,10 +112,10 @@ public class SudokuSolver {
 
     // simple function to get the next cell
     // read for yourself, very simple and straight forward
-    private static Cell getNextCell(Cell cell) {
+    private static Point getNextCell(Point point) {
 
-        int row = cell.row;
-        int col = cell.col;
+        int row = point.getX() - 1;
+        int col = point.getY() - 1;
 
         // next cell => col++
         col++;
@@ -132,7 +132,7 @@ public class SudokuSolver {
         if (row > 8)
             return null; // reached end
 
-        return new Cell(row, col);
+        return new Point(row + 1, col + 1);
     }
 
     private static Map<Point, Integer> transformGridToMap() {
@@ -151,17 +151,5 @@ public class SudokuSolver {
         }
     }
 
-    static class Cell {
-
-        final int row;
-        final int col;
-
-        public Cell(int row, int col) {
-            super();
-            this.row = row;
-            this.col = col;
-        }
-
-    }
 }
 
