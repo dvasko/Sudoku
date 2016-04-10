@@ -9,27 +9,27 @@ import java.util.Set;
 
 public class PointHelper {
 
-    private static Set<Character> validChars;
+    private static Set<Integer> validIntegers;
 
-    public static Set<Character> getAllowedChars() {
-        if (validChars == null) {
-            Set<Character> set = new HashSet<>();
-            set.add(' ');
-            set.add('1');
-            set.add('2');
-            set.add('3');
-            set.add('4');
-            set.add('5');
-            set.add('6');
-            set.add('7');
-            set.add('8');
-            set.add('9');
-            validChars = set;
+    public static Set<Integer> getAllowedIntegers() {
+        if (validIntegers == null) {
+            Set<Integer> set = new HashSet<>();
+            set.add(0);
+            set.add(1);
+            set.add(2);
+            set.add(3);
+            set.add(4);
+            set.add(5);
+            set.add(6);
+            set.add(7);
+            set.add(8);
+            set.add(9);
+            validIntegers = set;
         }
-        return validChars;
+        return validIntegers;
     }
 
-    public static boolean checkNumber(Map<Point, TextBox> map, Point point, char number) {
+    public static boolean checkNumber(Map<Point, TextBox> map, Point point, int number) {
         boolean foundError = checkRow(map, point, number);
         if (!foundError) {
             foundError = checkColumn(map, point, number);
@@ -40,48 +40,55 @@ public class PointHelper {
         return foundError;
     }
 
-    private static boolean checkRow(Map<Point, TextBox> map, Point point, char number) {
+    private static boolean checkRow(Map<Point, TextBox> map, Point point, int number) {
         for (int x = 1; x < 10; ++x) {
             Point tempPoint = new Point(x, point.getY());
             if (point.equals(tempPoint)) {
                 continue;
             }
-            TextBox temp = map.get(tempPoint);
-            if (temp.getText().length() > 0 && temp.getText().charAt(0) == number) {
+            if (checkPoint(map, tempPoint, number)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean checkColumn(Map<Point, TextBox> map, Point point, char number) {
+    private static boolean checkColumn(Map<Point, TextBox> map, Point point, int number) {
         for (int y = 1; y < 10; ++y) {
             Point tempPoint = new Point(point.getX(), y);
             if (point.equals(tempPoint)) {
                 continue;
             }
-            TextBox temp = map.get(tempPoint);
-            if (temp.getText().length() > 0 && temp.getText().charAt(0) == number) {
+            if (checkPoint(map, tempPoint, number)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean checkBox(Map<Point, TextBox> map, Point point, char number) {
+    private static boolean checkBox(Map<Point, TextBox> map, Point point, int number) {
         for (int i = 0, x = (((point.getX() - 1) / 3) * 3) + 1; i < 3; ++i, ++x) {
             for (int j = 0, y = (((point.getY() - 1) / 3) * 3) + 1; j < 3; ++j, ++y) {
                 Point tempPoint = new Point(x, y);
                 if (point.equals(tempPoint)) {
                     continue;
                 }
-                TextBox temp = map.get(tempPoint);
-                if (temp.getText().length() > 0 && temp.getText().charAt(0) == number) {
+                if (checkPoint(map, tempPoint, number)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private static boolean checkPoint(Map<Point, TextBox> map, Point point, int number) {
+        TextBox temp = map.get(point);
+        String text = temp.getText().toString();
+        if (text.isEmpty()) {
+            return false;
+        } else {
+            return Integer.parseInt(text) == number;
+        }
     }
 
     public static float convertDpToPixel(float dp) {

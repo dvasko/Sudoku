@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Sudoku {
-    private final Map<Point, Character> mInitialMap;
+    private final Map<Point, Integer> mInitialMap;
     private final Map<Point, TextBox> mMap;
     private Point mActivePoint;
 
-    private Sudoku(Context context, Map<Point, Character> initialMap, ViewGroup container) {
+    private Sudoku(Context context, Map<Point, Integer> initialMap, ViewGroup container) {
         mInitialMap = initialMap;
         mMap = new HashMap<>();
 
@@ -120,21 +120,21 @@ public class Sudoku {
         mActivePoint = null;
     }
 
-    public void drawOnActivePoint(char number) {
+    public void drawOnActivePoint(int number) {
         drawPoint(mActivePoint, number);
     }
 
     public void resetToStart() {
         clearAllData();
         for (Point point : mInitialMap.keySet()) {
-            Character number = mInitialMap.get(point);
+            int number = mInitialMap.get(point);
             drawPoint(point, number);
         }
     }
 
     private void clearAllData() {
         for (Point point : mMap.keySet()) {
-            drawPoint(point, ' ');
+            drawPoint(point, 0);
         }
     }
 
@@ -143,17 +143,18 @@ public class Sudoku {
         SudokuSolver.startSolving(mMap);
     }
 
-    private void drawPoint(Point point, char number) {
-        if (!PointHelper.getAllowedChars().contains(number)) {
-            throw new IllegalArgumentException("Allowed chars: '1', '2', '3', '4', '5', '6', '7', '8', '9' and ' '");
+    private void drawPoint(Point point, int number) {
+        if (!PointHelper.getAllowedIntegers().contains(number)) {
+            throw new IllegalArgumentException("Allowed integers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9'");
         }
         if (point != null) {
             TextBox box = mMap.get(point);
-            box.setText(String.valueOf(number));
-            if (number != ' ') {
+            if (number > 0) {
+                box.setText(String.valueOf(number));
                 boolean foundError = PointHelper.checkNumber(mMap, point, number);
                 box.setError(foundError);
             } else {
+                box.setText("");
                 box.setError(false);
             }
         }
@@ -163,7 +164,7 @@ public class Sudoku {
     public static class Builder {
         private Context context;
         private ViewGroup container;
-        private Map<Point, Character> initialMap;
+        private Map<Point, Integer> initialMap;
 
         public Builder context(Context context) {
             this.context = context;
@@ -175,7 +176,7 @@ public class Sudoku {
             return this;
         }
 
-        public Builder initial(Map<Point, Character> initialMap) {
+        public Builder initial(Map<Point, Integer> initialMap) {
             this.initialMap = initialMap;
             return this;
         }

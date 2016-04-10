@@ -22,7 +22,7 @@ public class Keyboard {
         }
     }
 
-    private void setupKey(ViewGroup container, int number) {
+    private void setupKey(ViewGroup container, final int number) {
         Button button = null;
         switch (number) {
             case -1:
@@ -36,13 +36,7 @@ public class Keyboard {
                 return;
             case 0:
                 button = (Button) container.findViewById(R.id.empty);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mSudoku.drawOnActivePoint(' ');
-                    }
-                });
-                return;
+                break;
             case 1:
                 button = (Button) container.findViewById(R.id.one);
                 break;
@@ -74,8 +68,7 @@ public class Keyboard {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Character character = ((Button) v).getText().charAt(0);
-                mSudoku.drawOnActivePoint(character);
+                mSudoku.drawOnActivePoint(number);
             }
         });
     }

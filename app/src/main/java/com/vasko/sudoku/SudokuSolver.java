@@ -143,11 +143,11 @@ public class SudokuSolver {
 
     private static void transformMapToGrid(Map<Point, TextBox> map) {
         for (Point point : map.keySet()) {
-            Character character = map.get(point).getText().charAt(0);
-            if (character == ' ') {
+            String text = map.get(point).getText().toString();
+            if(text.isEmpty()) {
                 continue;
             }
-            grid[point.getX() - 1][point.getY() - 1] = Integer.parseInt(String.valueOf(character));
+            grid[point.getX() - 1][point.getY() - 1] = Integer.parseInt(text);
         }
     }
 
