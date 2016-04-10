@@ -115,6 +115,33 @@ public class Sudoku {
         mMap.put(point, new Box(text));
     }
 
+    public void drawInitialSudoku() {
+        clearSudokuField();
+        for (Point point : mInitialMap.keySet()) {
+            drawNumberOnPoint(point, mInitialMap.get(point));
+        }
+        cleanSelectorOnAllBoxes();
+    }
+
+    public void drawSolvedSudoku() {
+        clearSudokuField();
+        for (Point point : mSolvedMap.keySet()) {
+            drawNumberOnPoint(point, mSolvedMap.get(point));
+        }
+        cleanSelectorOnAllBoxes();
+    }
+
+    public void drawNumberOnActivePoint(int number) {
+        drawNumberOnPoint(mActivePoint, number);
+        cleanSelectorOnAllBoxes();
+    }
+
+    private void clearSudokuField() {
+        for (Point point : mMap.keySet()) {
+            drawNumberOnPoint(point, 0);
+        }
+    }
+
     private void cleanSelectorOnAllBoxes() {
         for (Box box : mMap.values()) {
             box.setSelected(false);
@@ -122,31 +149,9 @@ public class Sudoku {
         mActivePoint = null;
     }
 
-    public void drawInitialSudoku() {
-        for (Point point : mMap.keySet()) {
-            drawPoint(point, 0);
-        }
-        for (Point point : mInitialMap.keySet()) {
-            drawPoint(point, mInitialMap.get(point));
-        }
-    }
-
-    public void drawSolvedSudoku() {
-        for (Point point : mMap.keySet()) {
-            drawPoint(point, 0);
-        }
-        for (Point point : mSolvedMap.keySet()) {
-            drawPoint(point, mSolvedMap.get(point));
-        }
-    }
-
-    public void drawOnActivePoint(int number) {
-        drawPoint(mActivePoint, number);
-    }
-
-    private void drawPoint(Point point, int number) {
+    private void drawNumberOnPoint(Point point, int number) {
         if (!PointHelper.getAllowedIntegers().contains(number)) {
-            throw new IllegalArgumentException("Allowed integers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9'");
+            throw new IllegalArgumentException("Allowed integers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9");
         }
         if (point != null) {
             Box box = mMap.get(point);
@@ -154,7 +159,6 @@ public class Sudoku {
             boolean foundError = PointHelper.checkNumber(mMap, point, number);
             box.setError(foundError);
         }
-        cleanSelectorOnAllBoxes();
     }
 
     public static class Builder {

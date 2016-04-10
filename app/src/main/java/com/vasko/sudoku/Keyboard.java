@@ -64,7 +64,7 @@ public class Keyboard {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSudoku.drawOnActivePoint(number);
+                mSudoku.drawNumberOnActivePoint(number);
             }
         });
     }
