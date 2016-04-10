@@ -13,12 +13,10 @@ import java.util.Map;
 public class Sudoku {
     private final Map<Point, Character> mInitialMap;
     private final Map<Point, TextBox> mMap;
-    private final Callback mCallback;
     private Point mActivePoint;
 
-    private Sudoku(Context context, Map<Point, Character> initialMap, ViewGroup container, Callback callback) {
+    private Sudoku(Context context, Map<Point, Character> initialMap, ViewGroup container) {
         mInitialMap = initialMap;
-        mCallback = callback;
         mMap = new HashMap<>();
 
         LayoutInflater.from(context).inflate(R.layout.sudoku_layout, container, true);
@@ -110,9 +108,6 @@ public class Sudoku {
                 cleanSelectorOnAllBoxes();
                 mActivePoint = point;
                 v.setSelected(true);
-                if (mCallback != null) {
-                    mCallback.onClick(point);
-                }
             }
         });
         mMap.put(point, text);
@@ -168,7 +163,6 @@ public class Sudoku {
     public static class Builder {
         private Context context;
         private ViewGroup container;
-        private Callback callback;
         private Map<Point, Character> initialMap;
 
         public Builder context(Context context) {
@@ -178,11 +172,6 @@ public class Sudoku {
 
         public Builder layout(ViewGroup container) {
             this.container = container;
-            return this;
-        }
-
-        public Builder click(Callback callback) {
-            this.callback = callback;
             return this;
         }
 
@@ -200,7 +189,7 @@ public class Sudoku {
             if (initialMap == null) {
                 initialMap = new HashMap<>();
             }
-            return new Sudoku(context, initialMap, container, callback);
+            return new Sudoku(context, initialMap, container);
         }
     }
 

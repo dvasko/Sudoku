@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         sudoku = new Sudoku.Builder()
                 .context(this)
                 .layout(sudokuContainer)
-                .click(null)
                 .initial(getMap())
                 .build();
 
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 .context(this)
                 .layout(keyboardContainer)
                 .sudoku(sudoku)
-                .click(null)
                 .build();
 
     }

@@ -9,11 +9,9 @@ import android.widget.Button;
 public class Keyboard {
 
     private final Sudoku mSudoku;
-    private final KeyCallback mCallback;
 
-    private Keyboard(Context context, final Sudoku sudoku, ViewGroup container, KeyCallback callback) {
+    private Keyboard(Context context, final Sudoku sudoku, ViewGroup container) {
         this.mSudoku = sudoku;
-        this.mCallback = callback;
 
         LayoutInflater.from(context).inflate(R.layout.keyboard_layout, container, true);
         for (int i = 0; i < 10; ++i) {
@@ -60,9 +58,6 @@ public class Keyboard {
             public void onClick(View v) {
                 Character character = ((Button) v).getText().charAt(0);
                 mSudoku.drawOnActivePoint(character);
-                if (mCallback != null) {
-                    mCallback.onKey(character);
-                }
             }
         });
     }
@@ -70,7 +65,6 @@ public class Keyboard {
     public static class Builder {
         private Context context;
         private ViewGroup container;
-        private KeyCallback callback;
         private Sudoku sudoku;
 
         public Builder context(Context context) {
@@ -80,11 +74,6 @@ public class Keyboard {
 
         public Builder layout(ViewGroup container) {
             this.container = container;
-            return this;
-        }
-
-        public Builder click(KeyCallback callback) {
-            this.callback = callback;
             return this;
         }
 
@@ -101,7 +90,7 @@ public class Keyboard {
             } else if (sudoku == null) {
                 throw new IllegalArgumentException("sudoku must be != null");
             }
-            return new Keyboard(context, sudoku, container, callback);
+            return new Keyboard(context, sudoku, container);
         }
     }
 }
