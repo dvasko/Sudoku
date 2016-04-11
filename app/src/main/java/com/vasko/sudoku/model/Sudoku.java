@@ -153,9 +153,20 @@ public class Sudoku implements Serializable {
     }
 
     private void drawRestoredSudoku(Map<Point, Box> savedMap) {
+        Map<Point, Box> errorMap = new HashMap<>();
         for (Point point : savedMap.keySet()) {
+            Box savedBox = savedMap.get(point);
+            if (savedBox.hasError()) {
+                errorMap.put(point, savedBox);
+                continue;
+            }
             if (mMap.get(point).getValue() == 0) {
-                drawNumberOnPoint(point, savedMap.get(point).getValue());
+                drawNumberOnPoint(point, savedBox.getValue());
+            }
+        }
+        for (Point point : errorMap.keySet()) {
+            if (mMap.get(point).getValue() == 0) {
+                drawNumberOnPoint(point, errorMap.get(point).getValue());
             }
         }
     }
