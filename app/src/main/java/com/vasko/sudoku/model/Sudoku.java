@@ -171,25 +171,37 @@ public class Sudoku implements Serializable {
         }
     }
 
+    private void clearSudokuField() {
+        for (Point point : mMap.keySet()) {
+            drawNumberOnPoint(point, 0);
+        }
+    }
+
+    public void drawHintOnActivePoint() {
+        if (mActivePoint != null) {
+            drawNumberOnActivePoint(mSolvedMap.get(mActivePoint));
+        } else {
+            Toast.makeText(mContext, R.string.select_field, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void drawNumberOnActivePoint(int number) {
         drawNumberOnPoint(mActivePoint, number);
         cleanSelectorOnAllBoxes();
         checkWin();
     }
 
-    public void drawHintOnActivePoint() {
-        if (mSolvedMap.get(mActivePoint) != null) {
-            drawNumberOnPoint(mActivePoint, mSolvedMap.get(mActivePoint));
-            cleanSelectorOnAllBoxes();
-            checkWin();
+    private void drawNumberOnPoint(Point point, int number) {
+        if (!PointHelper.getAllowedIntegers().contains(number)) {
+            throw new IllegalArgumentException("Allowed integers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9");
+        }
+        if (point != null) {
+            Box box = mMap.get(point);
+            box.setValue(number);
+            boolean foundError = PointHelper.checkNumber(mMap, point, number);
+            box.setError(foundError);
         } else {
             Toast.makeText(mContext, R.string.select_field, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void clearSudokuField() {
-        for (Point point : mMap.keySet()) {
-            drawNumberOnPoint(point, 0);
         }
     }
 
@@ -208,20 +220,6 @@ public class Sudoku implements Serializable {
             }
         }
         Toast.makeText(mContext, R.string.won, Toast.LENGTH_SHORT).show();
-    }
-
-    private void drawNumberOnPoint(Point point, int number) {
-        if (!PointHelper.getAllowedIntegers().contains(number)) {
-            throw new IllegalArgumentException("Allowed integers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9");
-        }
-        if (point != null) {
-            Box box = mMap.get(point);
-            box.setValue(number);
-            boolean foundError = PointHelper.checkNumber(mMap, point, number);
-            box.setError(foundError);
-        } else {
-            Toast.makeText(mContext, R.string.select_field, Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void onSavedInstanceState(Bundle outState) {
