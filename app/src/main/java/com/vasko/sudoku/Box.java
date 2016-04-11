@@ -3,9 +3,11 @@ package com.vasko.sudoku;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
-public class Box {
+import java.io.Serializable;
 
-    private final TextView textView;
+public class Box implements Serializable {
+
+    private transient final TextView textView;
     private int value;
     private boolean foundError;
 

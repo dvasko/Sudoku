@@ -15,8 +15,6 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String RESTORED_SUDOKU = "RESTORED_SUDOKU";
-
     private Sudoku sudoku;
 
     @Override
@@ -26,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewGroup sudokuContainer = (ViewGroup) findViewById(R.id.sudoku_container);
         sudoku = new Sudoku.Builder()
+                .savedInstance(savedInstanceState)
                 .layout(sudokuContainer)
                 .initial(getMap())
                 .build();
@@ -35,11 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 .layout(keyboardContainer)
                 .sudoku(sudoku)
                 .build();
-
-        if (savedInstanceState != null) {
-            Sudoku restoredSudoku = (Sudoku) savedInstanceState.getSerializable(RESTORED_SUDOKU);
-            sudoku.onRestoreState(restoredSudoku);
-        }
     }
 
     @Override
@@ -79,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(RESTORED_SUDOKU, sudoku);
+        sudoku.onSavedInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 

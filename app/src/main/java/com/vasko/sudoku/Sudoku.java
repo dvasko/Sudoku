@@ -1,6 +1,7 @@
 package com.vasko.sudoku;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +15,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Sudoku implements Serializable {
+
+    private static final String SAVED_INSTANCE = "SAVED_INSTANCE";
+
     private final Map<Point, Integer> mInitialMap;
     private final Map<Point, Integer> mSolvedMap;
     private final Map<Point, Box> mMap;
-    private final Context mContext;
+    private transient final Context mContext;
     private Point mActivePoint;
 
-    private Sudoku(Map<Point, Integer> initialMap, ViewGroup container) {
+    private Sudoku(Map<Point, Integer> initialMap, ViewGroup container, Bundle savedInstanceState) {
         mMap = new HashMap<>();
         mInitialMap = initialMap;
         mSolvedMap = SudokuSolver.getSolvedMap(mInitialMap);
@@ -34,6 +38,11 @@ public class Sudoku implements Serializable {
             initRow(sudokuLayout, y);
         }
         drawInitialSudoku();
+
+        if (savedInstanceState != null) {
+            SavedInstance savedInstance = (SavedInstance) savedInstanceState.getSerializable(SAVED_INSTANCE);
+            drawRestoredSudoku(savedInstance.getData());
+        }
     }
 
     private void initRow(ViewGroup sudoku, int y) {
@@ -138,6 +147,14 @@ public class Sudoku implements Serializable {
         cleanSelectorOnAllBoxes();
     }
 
+    private void drawRestoredSudoku(Map<Point, Box> savedMap) {
+        for (Point point : savedMap.keySet()) {
+            if (mMap.get(point).getValue() == 0) {
+                drawNumberOnPoint(point, savedMap.get(point).getValue());
+            }
+        }
+    }
+
     public void drawNumberOnActivePoint(int number) {
         drawNumberOnPoint(mActivePoint, number);
         cleanSelectorOnAllBoxes();
@@ -191,15 +208,21 @@ public class Sudoku implements Serializable {
         }
     }
 
-    public void onRestoreState(Sudoku restoredSudoku) {
-        for (Point point : restoredSudoku.mMap.keySet()) {
-            drawNumberOnPoint(point, restoredSudoku.mMap.get(point).getValue());
-        }
+    public void onSavedInstanceState(Bundle outState) {
+        outState.putSerializable(SAVED_INSTANCE, new SavedInstance(mMap));
     }
 
     public static class Builder {
         private ViewGroup container;
         private Map<Point, Integer> initialMap;
+        private Bundle savedInstanceState;
+        private boolean haveSavedState;
+
+        public Builder savedInstance(Bundle savedInstanceState) {
+            this.savedInstanceState = savedInstanceState;
+            haveSavedState = true;
+            return this;
+        }
 
         public Builder layout(ViewGroup container) {
             this.container = container;
@@ -215,11 +238,16 @@ public class Sudoku implements Serializable {
             if (container == null) {
                 throw new IllegalArgumentException("container must be != null");
             }
+            if (!haveSavedState) {
+                throw new IllegalArgumentException("must set savedInstanceState");
+            }
             if (initialMap == null) {
                 initialMap = new HashMap<>();
             }
-            return new Sudoku(initialMap, container);
+            return new Sudoku(initialMap, container, savedInstanceState);
         }
+
+
     }
 
 }
