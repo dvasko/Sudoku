@@ -1,4 +1,4 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.model;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.vasko.sudoku.R;
+import com.vasko.sudoku.helper.PointHelper;
+import com.vasko.sudoku.helper.SavedInstance;
+import com.vasko.sudoku.helper.SudokuSolver;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -184,7 +189,7 @@ public class Sudoku implements Serializable {
         mActivePoint = null;
     }
 
-    public void checkWin() {
+    private void checkWin() {
         for (Point point : mMap.keySet()) {
             Box box = mMap.get(point);
             if (box.getValue() <= 0 || box.hasError()) {

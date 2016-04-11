@@ -1,7 +1,9 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.model;
 
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
+
+import com.vasko.sudoku.R;
 
 import java.io.Serializable;
 

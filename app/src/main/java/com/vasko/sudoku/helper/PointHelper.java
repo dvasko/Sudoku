@@ -1,7 +1,10 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.helper;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
+
+import com.vasko.sudoku.model.Box;
+import com.vasko.sudoku.model.Point;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -86,6 +89,7 @@ public class PointHelper {
         return box.getValue() > 0 && box.getValue() == number;
     }
 
+    @SuppressWarnings("SameParameterValue")
     public static float convertDpToPixel(float dp) {
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);

@@ -1,4 +1,4 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.helper;
 
 import android.content.Context;
 import android.graphics.Rect;

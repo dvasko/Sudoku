@@ -1,9 +1,11 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.model;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.vasko.sudoku.R;
 
 public class Keyboard {
 
@@ -84,13 +86,13 @@ public class Keyboard {
             return this;
         }
 
-        public Keyboard build() {
+        public void build() {
             if (container == null) {
                 throw new IllegalArgumentException("container must be != null");
             } else if (sudoku == null) {
                 throw new IllegalArgumentException("sudoku must be != null");
             }
-            return new Keyboard(sudoku, container);
+            new Keyboard(sudoku, container);
         }
     }
 }

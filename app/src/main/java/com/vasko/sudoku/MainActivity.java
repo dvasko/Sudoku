@@ -11,6 +11,11 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
+import com.vasko.sudoku.helper.ToastBelowView;
+import com.vasko.sudoku.model.Keyboard;
+import com.vasko.sudoku.model.Point;
+import com.vasko.sudoku.model.Sudoku;
+
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {

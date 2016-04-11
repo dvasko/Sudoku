@@ -1,4 +1,4 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.model;
 
 import java.io.Serializable;
 

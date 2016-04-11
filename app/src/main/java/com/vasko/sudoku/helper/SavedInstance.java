@@ -1,11 +1,14 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.helper;
+
+import com.vasko.sudoku.model.Box;
+import com.vasko.sudoku.model.Point;
 
 import java.io.Serializable;
 import java.util.Map;
 
 public class SavedInstance implements Serializable {
 
-    private Map<Point, Box> data;
+    private final Map<Point, Box> data;
 
     public SavedInstance(Map<Point, Box> data) {
         this.data = data;

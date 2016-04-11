@@ -1,11 +1,13 @@
-package com.vasko.sudoku;
+package com.vasko.sudoku.helper;
+
+import com.vasko.sudoku.model.Point;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SudokuSolver {
 
-    private static Map<Point, Integer> grid = new HashMap<>();
+    private static final Map<Point, Integer> grid = new HashMap<>();
 
     public static Map<Point, Integer> getSolvedMap(Map<Point, Integer> mMap) {
         fillGrid(mMap);
