@@ -21,4 +21,5 @@ ehthumbs.db
 Thumbs.db
 
 
-#git rm --cached `git ls-files -i -X .gitignore`
+#git rm -r --cached .
+#git add .
