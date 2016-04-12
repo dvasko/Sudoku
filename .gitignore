@@ -8,7 +8,8 @@
 /captures
 
 # User secific
-
+.idea/gradle.xml
+.idea/misc.xml
 
 # OS-specific files
 .DS_Store
