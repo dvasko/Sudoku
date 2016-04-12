@@ -6,3 +6,16 @@
 .DS_Store
 /build
 /captures
+
+# User secific
+.idea/gradle.xml
+.idea/misc.xmludapted git ig
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
