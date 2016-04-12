@@ -9,7 +9,7 @@
 
 # User secific
 .idea/gradle.xml
-.idea/misc.xmludapted git ig
+.idea/misc.xml
 
 # OS-specific files
 .DS_Store
@@ -19,3 +19,6 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+
+#git rm --cached `git ls-files -i -X .gitignore`
