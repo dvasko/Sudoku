@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vasko.sudoku.R;
+import com.vasko.sudoku.SudokuInterface;
 import com.vasko.sudoku.helper.PointHelper;
 import com.vasko.sudoku.helper.SavedInstance;
 import com.vasko.sudoku.helper.SudokuSolver;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Sudoku implements Serializable {
+public class Sudoku implements Serializable, SudokuInterface {
 
     private static final String SAVED_INSTANCE = "SAVED_INSTANCE";
 
@@ -135,6 +136,7 @@ public class Sudoku implements Serializable {
         mMap.put(point, new Box(text));
     }
 
+    @Override
     public void drawInitialSudoku() {
         clearSudokuField();
         for (Point point : mInitialMap.keySet()) {
@@ -144,6 +146,7 @@ public class Sudoku implements Serializable {
         cleanSelectorOnAllBoxes();
     }
 
+    @Override
     public void drawSolvedSudoku() {
         clearSudokuField();
         for (Point point : mSolvedMap.keySet()) {
@@ -177,6 +180,7 @@ public class Sudoku implements Serializable {
         }
     }
 
+    @Override
     public void drawHintOnActivePoint() {
         if (mActivePoint != null) {
             drawNumberOnActivePoint(mSolvedMap.get(mActivePoint));
@@ -185,6 +189,7 @@ public class Sudoku implements Serializable {
         }
     }
 
+    @Override
     public void drawNumberOnActivePoint(int number) {
         drawNumberOnPoint(mActivePoint, number);
         cleanSelectorOnAllBoxes();
@@ -222,6 +227,7 @@ public class Sudoku implements Serializable {
         Toast.makeText(mContext, R.string.won, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
     public void onSavedInstanceState(Bundle outState) {
         outState.putSerializable(SAVED_INSTANCE, new SavedInstance(mMap));
     }
@@ -248,7 +254,7 @@ public class Sudoku implements Serializable {
             return this;
         }
 
-        public Sudoku build() {
+        public SudokuInterface build() {
             if (container == null) {
                 throw new IllegalArgumentException("container must be != null");
             }

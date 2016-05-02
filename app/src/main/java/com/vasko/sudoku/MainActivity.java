@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Sudoku sudoku;
+    private SudokuInterface sudoku;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

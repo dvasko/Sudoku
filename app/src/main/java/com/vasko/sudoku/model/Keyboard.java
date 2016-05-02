@@ -5,13 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.vasko.sudoku.KeyboardInterface;
 import com.vasko.sudoku.R;
 
 public class Keyboard {
 
-    private final Sudoku mSudoku;
+    private final KeyboardInterface mSudoku;
 
-    private Keyboard(final Sudoku sudoku, ViewGroup container) {
+    private Keyboard(final KeyboardInterface sudoku, ViewGroup container) {
         mSudoku = sudoku;
 
         container.removeAllViews();
@@ -74,14 +75,14 @@ public class Keyboard {
 
     public static class Builder {
         private ViewGroup container;
-        private Sudoku sudoku;
+        private KeyboardInterface sudoku;
 
         public Builder layout(ViewGroup container) {
             this.container = container;
             return this;
         }
 
-        public Builder sudoku(Sudoku sudoku) {
+        public Builder sudoku(KeyboardInterface sudoku) {
             this.sudoku = sudoku;
             return this;
         }
