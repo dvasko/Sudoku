@@ -6,11 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
+import com.vasko.sudoku.helper.RotateView;
 import com.vasko.sudoku.helper.SudokuGenerator;
 import com.vasko.sudoku.helper.ToastBelowView;
 import com.vasko.sudoku.model.Keyboard;
@@ -47,10 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ImageView imageView = (ImageView) v;
-                RotateAnimation animation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                animation.setInterpolator(new AccelerateDecelerateInterpolator());
-                animation.setDuration(400);
-                imageView.startAnimation(animation);
+                RotateView.with(imageView);
                 sudoku.drawInitialSudoku();
             }
         });
