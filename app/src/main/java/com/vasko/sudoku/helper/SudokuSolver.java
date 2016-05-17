@@ -2,7 +2,10 @@ package com.vasko.sudoku.helper;
 
 import com.vasko.sudoku.model.Point;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SudokuSolver {
@@ -10,12 +13,25 @@ public class SudokuSolver {
     private static final Map<Point, Integer> grid = new HashMap<>();
 
     public static Map<Point, Integer> getSolvedMap(Map<Point, Integer> mMap) {
+        if (mMap.isEmpty()) {
+            mMap = randomMap();
+        }
         fillGrid(mMap);
         boolean solved = solve(new Point(1, 1));
         if (solved) {
             return grid;
         }
         return null;
+    }
+
+    private static Map<Point, Integer> randomMap() {
+        Map<Point, Integer> tempMap = new HashMap<>();
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collections.shuffle(list);
+        for (int i = 1; i < 10; ++i) {
+            tempMap.put(new Point(i, 1), list.get(i - 1));
+        }
+        return tempMap;
     }
 
     // everything is put together here
