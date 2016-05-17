@@ -16,8 +16,6 @@ import com.vasko.sudoku.helper.ToastBelowView;
 import com.vasko.sudoku.model.Keyboard;
 import com.vasko.sudoku.model.Sudoku;
 
-import static com.vasko.sudoku.helper.SudokuGenerator.Difficulty.ADVANCED;
-
 public class MainActivity extends AppCompatActivity {
 
     private SudokuInterface sudoku;
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         sudoku = new Sudoku.Builder()
                 .savedInstance(savedInstanceState)
                 .layout(sudokuContainer)
-                .initial(SudokuGenerator.generate(ADVANCED))
+                .initial(SudokuGenerator.generate())
                 .build();
 
         ViewGroup keyboardContainer = (ViewGroup) findViewById(R.id.keyboard_container);

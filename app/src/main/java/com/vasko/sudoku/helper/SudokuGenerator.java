@@ -7,11 +7,7 @@ import java.util.Map;
 
 public class SudokuGenerator {
 
-    public enum Difficulty {
-        BEGINNER, ADVANCED, EXPERT
-    }
-
-    public static Map<Point, Integer> generate(Difficulty difficulty) {
+    public static Map<Point, Integer> generate() {
         //TODO someone will implement this method
         HashMap<Point, Integer> initial = new HashMap<>();
         initial.put(new Point(1, 1), 7);
