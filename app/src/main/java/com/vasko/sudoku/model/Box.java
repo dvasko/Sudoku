@@ -13,7 +13,7 @@ public class Box implements Serializable {
     private int value;
     private boolean foundError;
 
-    public Box(TextView textView) {
+    Box(TextView textView) {
         this.textView = textView;
     }
 
@@ -21,11 +21,11 @@ public class Box implements Serializable {
         return value;
     }
 
-    public boolean hasError() {
+    boolean hasError() {
         return foundError;
     }
 
-    public void setValue(int number) {
+    void setValue(int number) {
         value = number;
         if (number > 0) {
             textView.setText(String.valueOf(number));
@@ -34,7 +34,7 @@ public class Box implements Serializable {
         }
     }
 
-    public void setSelected(boolean selected) {
+    void setSelected(boolean selected) {
         textView.setSelected(selected);
         if (!foundError) {
             if (selected) {
@@ -45,7 +45,7 @@ public class Box implements Serializable {
         }
     }
 
-    public void setError(boolean foundError) {
+    void setError(boolean foundError) {
         this.foundError = foundError;
         if (foundError) {
             textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.red));
@@ -54,7 +54,7 @@ public class Box implements Serializable {
         }
     }
 
-    public void disable() {
+    void disable() {
         textView.setEnabled(false);
     }
 }

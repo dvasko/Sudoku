@@ -26,7 +26,7 @@ public class Keyboard {
         Button button = null;
         switch (number) {
             case -1:
-                button = (Button) container.findViewById(R.id.hint);
+                button = container.findViewById(R.id.hint);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -35,34 +35,34 @@ public class Keyboard {
                 });
                 return;
             case 0:
-                button = (Button) container.findViewById(R.id.empty);
+                button = container.findViewById(R.id.empty);
                 break;
             case 1:
-                button = (Button) container.findViewById(R.id.one);
+                button = container.findViewById(R.id.one);
                 break;
             case 2:
-                button = (Button) container.findViewById(R.id.two);
+                button = container.findViewById(R.id.two);
                 break;
             case 3:
-                button = (Button) container.findViewById(R.id.three);
+                button = container.findViewById(R.id.three);
                 break;
             case 4:
-                button = (Button) container.findViewById(R.id.four);
+                button = container.findViewById(R.id.four);
                 break;
             case 5:
-                button = (Button) container.findViewById(R.id.five);
+                button = container.findViewById(R.id.five);
                 break;
             case 6:
-                button = (Button) container.findViewById(R.id.six);
+                button = container.findViewById(R.id.six);
                 break;
             case 7:
-                button = (Button) container.findViewById(R.id.seven);
+                button = container.findViewById(R.id.seven);
                 break;
             case 8:
-                button = (Button) container.findViewById(R.id.eight);
+                button = container.findViewById(R.id.eight);
                 break;
             case 9:
-                button = (Button) container.findViewById(R.id.nine);
+                button = container.findViewById(R.id.nine);
                 break;
         }
         button.setOnClickListener(new View.OnClickListener() {

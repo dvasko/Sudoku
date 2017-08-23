@@ -38,7 +38,7 @@ public class Sudoku implements Serializable, SudokuInterface {
 
         container.removeAllViews();
         LayoutInflater.from(mContext).inflate(R.layout.sudoku_layout, container, true);
-        ViewGroup sudokuLayout = (ViewGroup) container.findViewById(R.id.sudoku_layout);
+        ViewGroup sudokuLayout = container.findViewById(R.id.sudoku_layout);
         ViewCompat.setElevation(sudokuLayout, PointHelper.convertDpToPixel(8));
         for (int y = 0; y < 3; ++y) {
             initRow(sudokuLayout, y);
@@ -55,13 +55,13 @@ public class Sudoku implements Serializable, SudokuInterface {
         LinearLayout row = null;
         switch (y) {
             case 0:
-                row = (LinearLayout) sudoku.findViewById(R.id.first_row);
+                row = sudoku.findViewById(R.id.first_row);
                 break;
             case 1:
-                row = (LinearLayout) sudoku.findViewById(R.id.second_row);
+                row = sudoku.findViewById(R.id.second_row);
                 break;
             case 2:
-                row = (LinearLayout) sudoku.findViewById(R.id.third_row);
+                row = sudoku.findViewById(R.id.third_row);
                 break;
         }
         for (int x = 0; x < 3; ++x) {
@@ -73,13 +73,13 @@ public class Sudoku implements Serializable, SudokuInterface {
         LinearLayout box = null;
         switch (x) {
             case 0:
-                box = (LinearLayout) row.findViewById(R.id.first_column);
+                box = row.findViewById(R.id.first_column);
                 break;
             case 1:
-                box = (LinearLayout) row.findViewById(R.id.second_column);
+                box = row.findViewById(R.id.second_column);
                 break;
             case 2:
-                box = (LinearLayout) row.findViewById(R.id.third_column);
+                box = row.findViewById(R.id.third_column);
                 break;
         }
         for (int i = 0; i < 9; ++i) {
@@ -91,31 +91,31 @@ public class Sudoku implements Serializable, SudokuInterface {
         TextView text = null;
         switch (number) {
             case 0:
-                text = (TextView) box.findViewById(R.id.one);
+                text = box.findViewById(R.id.one);
                 break;
             case 1:
-                text = (TextView) box.findViewById(R.id.two);
+                text = box.findViewById(R.id.two);
                 break;
             case 2:
-                text = (TextView) box.findViewById(R.id.three);
+                text = box.findViewById(R.id.three);
                 break;
             case 3:
-                text = (TextView) box.findViewById(R.id.four);
+                text = box.findViewById(R.id.four);
                 break;
             case 4:
-                text = (TextView) box.findViewById(R.id.five);
+                text = box.findViewById(R.id.five);
                 break;
             case 5:
-                text = (TextView) box.findViewById(R.id.six);
+                text = box.findViewById(R.id.six);
                 break;
             case 6:
-                text = (TextView) box.findViewById(R.id.seven);
+                text = box.findViewById(R.id.seven);
                 break;
             case 7:
-                text = (TextView) box.findViewById(R.id.eight);
+                text = box.findViewById(R.id.eight);
                 break;
             case 8:
-                text = (TextView) box.findViewById(R.id.nine);
+                text = box.findViewById(R.id.nine);
                 break;
         }
         setupBox(text, x, y, number);
