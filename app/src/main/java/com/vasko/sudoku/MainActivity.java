@@ -23,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewGroup sudokuContainer = (ViewGroup) findViewById(R.id.sudoku_container);
+        ViewGroup sudokuContainer = findViewById(R.id.sudoku_container);
         sudoku = new Sudoku.Builder()
                 .savedInstance(savedInstanceState)
                 .layout(sudokuContainer)
                 .initial(SudokuGenerator.generate())
                 .build();
 
-        ViewGroup keyboardContainer = (ViewGroup) findViewById(R.id.keyboard_container);
+        ViewGroup keyboardContainer = findViewById(R.id.keyboard_container);
         new Keyboard.Builder()
                 .layout(keyboardContainer)
                 .sudoku(sudoku)
